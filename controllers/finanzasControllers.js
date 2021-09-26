@@ -134,13 +134,10 @@ const finanzasControllers = {
             }
         } else {
             try {
-                let ingresoEditado = await Ingreso.update({
-                    ...req.body,
-                    categoria: req.body.categoria,
-                    descripcion: req.body.descripcion,
-                    monto: req.body.monto,
-                    fecha: req.body.fecha
-                }, {where: {id: req.body.id}})
+                const {categoria, descripcion, monto, fecha, id} = req.body
+                let ingresoEditado = await Ingreso.update(
+                    {...req.body, categoria, descripcion, monto, fecha},
+                    {where: {id: id}})
                 console.log(ingresoEditado)
                 res.redirect('/ingresos')
             } catch(e) {
@@ -154,7 +151,8 @@ const finanzasControllers = {
 
     borrarIngreso: async (req, res) => {
         try {
-            await Ingreso.findOneAndDelete({_id: req.params.id})
+            let ingreso = await Ingreso.findByPk(req.params.id)
+            ingreso.destroy()
             res.redirect('/ingresos')
         } catch(e) {
             console.log(e)
@@ -166,7 +164,7 @@ const finanzasControllers = {
 
     editarIngreso: async (req, res) => {
         try {
-            let ingreso = await Ingreso.findOne({_id: req.params.id})
+            let ingreso = await Ingreso.findAll({where: {id: req.params.id}})
             console.log(ingreso)
             res.render('ingresos', {
                 title: 'Panel ingresos',
@@ -190,7 +188,7 @@ const finanzasControllers = {
     gastos: async (req, res) => {
         if(req.session.loggedIn) {
             try {
-                const gastos = await Gasto.find({usuarioId: req.session.usuarioId})
+                const gastos = await Gasto.findAll({where: {usuarioId: req.session.usuarioId}})
                 console.log(gastos)
                 res.render('gastos', {
                 title: 'Panel gastos',
@@ -218,7 +216,7 @@ const finanzasControllers = {
 
     registrarGasto: async (req, res) => {
         if(!req.body.id) {
-            let nuevoGasto = new Gasto({
+            let nuevoGasto = await new Gasto({
                 tipo: req.body.tipo,
                 descripcion: req.body.descripcion,
                 monto: req.body.monto,
@@ -242,7 +240,7 @@ const finanzasControllers = {
         } else {
             try {
                 const {tipo, descripcion, monto, fecha, id} = req.body
-                let gastoEditado = await Gasto.findOneAndUpdate({_id: id}, {tipo, descripcion, monto, fecha} ,{new: true})
+                let gastoEditado = await Gasto.update({...req.body, tipo, descripcion, monto, fecha}, {id: id}, )
                 console.log(gastoEditado)
                 res.redirect('/gastos')
             } catch(e) {
@@ -256,7 +254,8 @@ const finanzasControllers = {
 
     borrarGasto: async (req, res) => {
         try {
-            await Gasto.findOneAndDelete({_id: req.params.id})
+            let gasto = await Gasto.findByPk(req.params.id)
+            gasto.destroy()
             res.redirect('/gastos')
         } catch(e) {
             console.log(e)
@@ -268,7 +267,7 @@ const finanzasControllers = {
 
     editarGasto: async (req, res) => {
         try {
-            let gasto = await Gasto.findOne({_id: req.params.id})
+            let gasto = await Gasto.findAll({where: {id: req.params.id}})
             res.render('gastos', {
                 title: 'Panel gastos',
                 error: null,
@@ -291,7 +290,7 @@ const finanzasControllers = {
     ahorros: async (req, res) => {
         if(req.session.loggedIn) {
             try {
-                const ahorros = await Ahorro.find({usuarioId: req.session.usuarioId})
+                const ahorros = await Ahorro.findAll({where: {usuarioId: req.session.usuarioId}})
                 console.log(ahorros)
                 res.render('ahorros', {
                 title: 'Panel ahorros',
@@ -319,14 +318,15 @@ const finanzasControllers = {
 
     registrarAhorro: async (req, res) => {
         if(!req.body.id) {
+            let nuevoAhorro = await new Ahorro({
+                categoria: req.body.categoria,
+                descripcion: req.body.descripcion,
+                monto: req.body.monto,
+                fecha: req.body.fecha,
+                usuarioId: req.body.usuarioId,
+            })
             try {
-                await Ahorro.create({
-                    categoria: req.body.categoria,
-                    descripcion: req.body.descripcion,
-                    monto: req.body.monto,
-                    fecha: req.body.fecha,
-                    usuarioId: req.body.usuarioId,
-                })
+                await nuevoAhorro.save()
                 res.redirect('/ahorros')
             } catch (e) {
                 res.render('ahorros', {
@@ -342,7 +342,7 @@ const finanzasControllers = {
         } else {
             try {
                 const {categoria, descripcion, monto, fecha, id} = req.body
-                let ahorroEditado = await Ahorro.findOneAndUpdate({_id: id}, {categoria, descripcion, monto, fecha} ,{new: true})
+                let ahorroEditado = await Ahorro.update({...req.body, categoria, descripcion, monto, fecha}, {id: id}, )
                 console.log(ahorroEditado)
                 res.redirect('/ahorros')
             } catch(e) {
@@ -353,10 +353,11 @@ const finanzasControllers = {
             }
         }
     },
-   
+
     borrarAhorro: async (req, res) => {
         try {
-            await Ahorro.findOneAndDelete({_id: req.params.id})
+            let ahorro = await Ahorro.findByPk(req.params.id)
+            ahorro.destroy()
             res.redirect('/ahorros')
         } catch(e) {
             console.log(e)
@@ -368,7 +369,7 @@ const finanzasControllers = {
 
     editarAhorro: async (req, res) => {
         try {
-            let ahorro = await Ahorro.findOne({_id: req.params.id})
+            let ahorro = await Ahorro.findAll({where: {id: req.params.id}})
             res.render('ahorros', {
                 title: 'Panel ahorros',
                 error: null,
@@ -387,11 +388,10 @@ const finanzasControllers = {
             })
         }
     },
-
+    
     nuevoMes: async (req, res) => {
         if(req.session.loggedIn) {
             await Ingreso.deleteMany({usuarioId: req.session.usuarioId})
-            // await Itinerary.updateMany({}, {...req.body}, {new: true})
             await Gasto.deleteMany({usuarioId: req.session.usuarioId})
             await Ahorro.deleteMany({usuarioId: req.session.usuarioId})
             res.render('misFinanzas', {
