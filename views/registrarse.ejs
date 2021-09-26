@@ -1,0 +1,28 @@
+<%- include('./partials/head.ejs') %>
+<body class="bodylogueo">
+    <%- include('./partials/header.ejs') %>
+        <main>  
+            <form action="/registrarse" method="POST" id="formSesion">
+                <div class="divForm">
+                    <h1 class="formularioH1">Registrar cuenta</h1>
+                    <div class="grupo">
+                        <input type="text" name="nombre" id="" autoComplete="off" required /><span class="barra"></span>
+                        <label for="">Nombre</label>
+                    </div>
+                    <div class="grupo">
+                        <input type="email" name="email" id="" autoComplete="off" required /><span class="barra"></span>
+                        <label for="">Email</label>
+                    </div>
+                    <div class="grupo">
+                        <input type="password" name="contrasenia" id="" autoComplete="off" required /><span class="barra"></span>
+                        <label for="">Contraseña</label>
+                    </div>
+                    <input class="botonForm" type="submit" value="Registrarse"/>
+                    <p class="<%= error != null ? 'error' : 'sinError' %>"><%= error %></p>
+                    <p class="pregunta">¿Ya tenés cuenta?<a href="/iniciarsesion">Iniciá sesion!</a></p>
+                </div>
+            </form>
+        </main>
+        <%- include('./partials/footer.ejs') %>
+</body>
+</html>

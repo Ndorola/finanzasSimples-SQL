@@ -1,0 +1,102 @@
+<%- include('./partials/head.ejs') %>
+<% var totalIngresos = ingresos ? ingresos.reduce((sum, value) => ( sum + value.monto ), 0) : 0 %>
+<% var totalGastos = gastos ? gastos.reduce((sum, value) => ( sum + value.monto ), 0) : 0 %>
+<% var totalFijos = fijos ? fijos.reduce((sum, value) => ( sum + value.monto ), 0) : 0 %>
+<% var totalVariables = variables ? variables.reduce((sum, value) => ( sum + value.monto ), 0) : 0 %>
+<% var totalAhorros = ahorros ? ahorros.reduce((sum, value) => ( sum + value.monto ), 0) : 0 %>
+
+<% var balance = totalIngresos - totalGastos - totalAhorros %>
+
+<% var porcentajeFijos = (totalFijos / totalIngresos) * 100 %>
+<% var porcentajeVariables = (totalVariables / totalIngresos) * 100 %>
+<% var porcentajeAhorros = (totalAhorros / totalIngresos) * 100 %>
+
+<body class="bodyFinanzas">
+    <header>
+        <div class="cajaLogo">
+            <img class="logo" src="/assets/fslogoblanco.png" alt="logoFS"/>
+            <p>Hola <%= nombre %> !</p>
+        </div>
+        <nav>
+            <a class="cerrarSesion" href="/cerrarsesion">Cerrar sesion</a>
+        </nav>
+    </header>
+    <main>
+        <div class="cajaMain">
+            <div class="cajaPanel">
+                <div class="panelTitle">
+                    <h3 class="titleh3">Mi balance mensual</h3>
+                    <a class="nuevomes" href="/nuevomes"><img class="reiniciar" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHhtbG5zOnN2Z2pzPSJodHRwOi8vc3ZnanMuY29tL3N2Z2pzIiB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgeD0iMCIgeT0iMCIgdmlld0JveD0iMCAwIDUxMiA1MTIiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDUxMiA1MTIiIHhtbDpzcGFjZT0icHJlc2VydmUiIGNsYXNzPSIiPjxnPjxnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGc+PHBhdGggZD0ibTQ2My43ODcgMjc3LjA3OWMtNC4xNzkgMTExLjExNS05NS41NzYgMTk5LjkxMi0yMDcuNzEzIDE5OS45MTItMTE1LjEzOSAwLTIwNy44NjQtOTIuNzI1LTIwNy44NjQtMjA3Ljg2NCAwLTExNC43OTkgOTMuMDY0LTIwNy44NjIgMjA3Ljg2My0yMDcuODYydjE4LjU0M2MwIDYuMzI0IDcuMjAxIDkuOTUyIDEyLjI4MyA2LjE4N2w0OC42NjMtMzYuMDQ3YzQuMTU2LTMuMDc4IDQuMTU2LTkuMjk2IDAtMTIuMzc1bC00OC42NjMtMzYuMDQ3Yy01LjA4Mi0zLjc2NC0xMi4yODMtLjEzNy0xMi4yODMgNi4xODd2MTguNTQzYy0xMzQuMTM0IDAtMjQyLjg3MSAxMDguNzM3LTI0Mi44NzIgMjQyLjg3MSAwIDEzMy44MDcgMTA5LjA2NyAyNDIuODczIDI0Mi44NzMgMjQyLjg3MyAxMzEuMjM1IDAgMjM4LjE1OS0xMDQuMDg5IDI0Mi43MTktMjM0LjIxMi4xNjYtNC43MjYtMy41OTUtOC42Ni04LjMyMy04LjY2aC0xOC4zNjljLTQuNDUyIDAtOC4xNDcgMy41MDItOC4zMTQgNy45NTF6IiBmaWxsPSIjZmZmZmZmIiBkYXRhLW9yaWdpbmFsPSIjOWJlNjlkIiBzdHlsZT0iIiBjbGFzcz0iIj48L3BhdGg+PC9nPjxnPjxwYXRoIGQ9Im00OTAuNDcgMjY5LjEyOGgtMTguMzY5Yy00LjQ1MiAwLTguMTQ3IDMuNTAyLTguMzE0IDcuOTUxLTQuMTc5IDExMS4xMTUtOTUuNTc2IDE5OS45MTItMjA3LjcxMyAxOTkuOTEyLTM5LjU3NSAwLTc2LjUwMy0xMC45NTUtMTA3LjkyNy0zMC4wMDktMjYuNTA0LTIuODc0LTUxLjkwMS05LjQyNC03NS42OC0xOS4xMjkgNDQuNTg3IDUxLjQ5MyAxMTAuMzkzIDg0LjE0NyAxODMuNjA3IDg0LjE0NyAxMzEuMjM1LS4wMDEgMjM4LjE1OS0xMDQuMDg5IDI0Mi43MTktMjM0LjIxMi4xNjYtNC43MjYtMy41OTQtOC42Ni04LjMyMy04LjY2eiIgZmlsbD0iI2ZmZmZmZiIgZGF0YS1vcmlnaW5hbD0iIzZmZDdhMyIgc3R5bGU9IiIgY2xhc3M9IiI+PC9wYXRoPjwvZz48ZyBmaWxsPSIjZmZkMTViIj48cGF0aCBkPSJtMTUwLjQ1OCAyNTMuMTM2YzAtMTMuNjgtMTEuNTY5LTI0LjgwOS0yNS43ODktMjQuODA5aC0xNy42OThjLTQuMTQxIDAtNy40OTcgMy4zNTUtNy41IDcuNDk1bC0uMDIxIDY2LjYwNmMwIDQuMTQyIDMuMzU3IDcuNSA3LjUgNy41czcuNS0zLjM1OCA3LjUtNy41di0yMS4wNGwyMi44NzkgMjUuOTk1YzEuNDgyIDEuNjg1IDMuNTUzIDIuNTQ1IDUuNjMzIDIuNTQ1IDEuNzYgMCAzLjUyNy0uNjE2IDQuOTUyLTEuODcgMy4xMDktMi43MzcgMy40MTEtNy40NzYuNjc1LTEwLjU4NWwtMTcuODEyLTIwLjIzOGMxMS4yOC0yLjY0NSAxOS42ODEtMTIuNDQzIDE5LjY4MS0yNC4wOTl6bS0yNS43ODkgOS44MDljLTIuMzU0IDAtNi41MTMuMDE4LTEwLjIxNS4wMzZsLjAxMi0xOS42NTNoMTAuMjAzYzUuODQ5IDAgMTAuNzg5IDQuNDkyIDEwLjc4OSA5LjgwOSAwIDUuMzE2LTQuOTQgOS44MDgtMTAuNzg5IDkuODA4eiIgZmlsbD0iI2ZmZmZmZiIgZGF0YS1vcmlnaW5hbD0iI2ZmZDE1YiIgc3R5bGU9IiIgY2xhc3M9IiI+PC9wYXRoPjxwYXRoIGQ9Im0yMDIuNTA1IDI0My4zMjhjNC4xNDMgMCA3LjUtMy4zNTggNy41LTcuNXMtMy4zNTctNy41LTcuNS03LjVoLTI4LjA2M2MtNC4xNDMgMC03LjUgMy4zNTgtNy41IDcuNXY2Ni42MDJjMCA0LjE0MiAzLjM1NyA3LjUgNy41IDcuNWgyOC4wNjNjNC4xNDMgMCA3LjUtMy4zNTggNy41LTcuNXMtMy4zNTctNy41LTcuNS03LjVoLTIwLjU2M3YtMTguMzAxaDE4LjQ5NGM0LjE0MyAwIDcuNS0zLjM1OCA3LjUtNy41cy0zLjM1Ny03LjUtNy41LTcuNWgtMTguNDk0di0xOC4zMDF6IiBmaWxsPSIjZmZmZmZmIiBkYXRhLW9yaWdpbmFsPSIjZmZkMTViIiBzdHlsZT0iIiBjbGFzcz0iIj48L3BhdGg+PHBhdGggZD0ibTMzNi44MzEgMjQzLjMyOGM0LjE0MyAwIDcuNS0zLjM1OCA3LjUtNy41cy0zLjM1Ny03LjUtNy41LTcuNWgtMjguMDYyYy00LjE0MyAwLTcuNSAzLjM1OC03LjUgNy41djY2LjYwMmMwIDQuMTQyIDMuMzU3IDcuNSA3LjUgNy41aDI4LjA2MmM0LjE0MyAwIDcuNS0zLjM1OCA3LjUtNy41cy0zLjM1Ny03LjUtNy41LTcuNWgtMjAuNTYydi0xOC4zMDFoMTguNDk0YzQuMTQzIDAgNy41LTMuMzU4IDcuNS03LjVzLTMuMzU3LTcuNS03LjUtNy41aC0xOC40OTR2LTE4LjMwMXoiIGZpbGw9IiNmZmZmZmYiIGRhdGEtb3JpZ2luYWw9IiNmZmQxNWIiIHN0eWxlPSIiIGNsYXNzPSIiPjwvcGF0aD48cGF0aCBkPSJtMjY1Ljg4NyAyNjIuNjE3LTIuOTU3LTEuMDg5Yy03Ljg0OC0yLjg4Ny0xMS43ODctNC4zMzYtMTUuNDI3LTYuMzE4LTIuMTQxLTEuMTY2LTIuMjU2LTMuMzE3LTIuMTM0LTQuNDk1LjI0OC0yLjQwNyAxLjk4MS01LjQyIDYuMDk4LTYuNjYgOS44MzgtMi45NjEgMTguODU3IDQuMjAyIDE5LjA5IDQuMzg5IDMuMTcgMi42MzMgNy44NzYgMi4yMTUgMTAuNTMyLS45NDQgMi42NjUtMy4xNzEgMi4yNTUtNy45MDItLjkxNS0xMC41NjctLjYxNS0uNTE3LTE1LjI2LTEyLjU5NS0zMy4wMzMtNy4yNC05LjIwMyAyLjc3Mi0xNS43NTYgMTAuNDE5LTE2LjY5MiAxOS40NzktLjgzNSA4LjA3NiAyLjk1MSAxNS40MzcgOS44OCAxOS4yMTEgNC42MDQgMi41MDggOS4xNTcgNC4xODMgMTcuNDIzIDcuMjIzbDIuOTQ0IDEuMDg0YzMuMTE1IDEuMTQ5IDEwLjI1MyA0LjQyMiA5LjI2IDkuOTg2LS43MjUgNC4wNTctNS41NzggOC4yNTMtMTIuNDQ3IDguMjUzLTYuODQ5IDAtMTMuNDQ3LTIuNzctMTcuNjUxLTcuNDA5LTIuNzgyLTMuMDcxLTcuNTI2LTMuMzAyLTEwLjU5NC0uNTIxLTMuMDY5IDIuNzgxLTMuMzAzIDcuNTI0LS41MjEgMTAuNTk0IDcgNy43MjUgMTcuNzU0IDEyLjMzNiAyOC43NjcgMTIuMzM2IDEzLjYzNiAwIDI1LjA4LTguNjcgMjcuMjEzLTIwLjYxNiAxLjU5Ny04Ljk1OC0yLjUxMS0yMC42NzQtMTguODM2LTI2LjY5NnoiIGZpbGw9IiNmZmZmZmYiIGRhdGEtb3JpZ2luYWw9IiNmZmQxNWIiIHN0eWxlPSIiIGNsYXNzPSIiPjwvcGF0aD48cGF0aCBkPSJtNDA1LjA1MSAyMjguMzI4aC0zNi43ODFjLTQuMTQzIDAtNy41IDMuMzU4LTcuNSA3LjVzMy4zNTcgNy41IDcuNSA3LjVoMTAuOTY1djU5LjEwMmMwIDQuMTQyIDMuMzU3IDcuNSA3LjUgNy41czcuNS0zLjM1OCA3LjUtNy41di01OS4xMDJoMTAuODE2YzQuMTQzIDAgNy41LTMuMzU4IDcuNS03LjVzLTMuMzU4LTcuNS03LjUtNy41eiIgZmlsbD0iI2ZmZmZmZiIgZGF0YS1vcmlnaW5hbD0iI2ZmZDE1YiIgc3R5bGU9IiIgY2xhc3M9IiI+PC9wYXRoPjwvZz48L2c+PC9nPjwvc3ZnPg==" /></a>
+                </div>
+                <div class="balance">
+                    <h1 class="balanceH1">$ <%= balance %> .-</h1>
+                </div>
+                <div id="panel">
+                    <div class="contenedorMov">
+                        <div class="movimientosBox">
+                            <a class="ingresos" href="/ingresos">Registrar ingresos</a>
+                            <p class="totalIngresos">$ <%= totalIngresos %> .-</p>
+                        </div>
+                        <div class="movimientosBox">
+                            <a class="gastos" href="/gastos">Registrar gastos</a>
+                            <p class="total">$ <%= totalGastos %> .-</p>
+                        </div>
+                        <div class="movimientosBox">
+                            <a class="ahorros" href="/ahorros">Registrar ahorros</a>
+                            <p class="total">$ <%= totalAhorros %> .-</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="informe">
+                <h2 class="proximamente">Proximamente informe mensual</h2>
+                <canvas id="myChart" width="300" height="300">
+                </canvas>
+                <!-- <p>gastos fijos: <%= porcentajeFijos %></p>
+                <p>gastos fijos: <%= porcentajeVariables %></p>
+                <p>gastos fijos: <%= porcentajeAhorros %></p> -->
+                <p class="callFinanzas2">¿Querés conocer cómo organizar mejor tus gastos mensuales? <a class="ah" href="/recomendacion">Hacé click aquí!</a></p>
+            </div>  
+        </div>
+    </main>
+    <%- include('./partials/footer.ejs') %>
+
+    <script>
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels:['Gastos fijos', 'Gastos variables', 'Ahorros'],
+                datasets:[{
+                    label:'Resumen mensual',
+                    data: [50,30,20],
+                    backgroundColor:[
+                        'rgba(210, 98, 103,2)',
+                        'rgba(224, 181, 181,2)',
+                        'rgba(235, 177, 30,2)'
+                    ],
+                }]
+            },
+            options: {
+            responsive: false,
+            plugins: {
+            legend: {
+                position: 'top',
+            },
+            // title: {
+            //     display: true,
+            //     text: ''
+            // }
+            }
+        },
+        })
+
+        function actualizarInforme() {
+            Chart.data.datasets[0].data = [30, 40, 10]
+
+            Chart.update()
+        }
+    </script>
+
+</body>
+</html>

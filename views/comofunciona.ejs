@@ -1,0 +1,32 @@
+<%- include('./partials/head.ejs') %>
+<body class="bodyExplicacion">
+    <%- include('./partials/header.ejs') %>
+    <main>  
+        <div class="comofunciona">
+            <div class="expContainer">
+                <h2 class="explicacionTitulo">¿Cómo funciona?</h2>
+                <h4 class="explicacionH4">Tené un detalle completo de tus gastos en 3 simples pasos</h4>
+            </div>
+            <div class="pasos">
+                <div class="grupoPasos">
+                    <img class="numero" src="/assets/uno.png" alt="uno"/>
+                    <h4>Registro</h4>
+                    <p>Creas tu cuenta de forma gratuita</p>
+                </div>
+                <div class="grupoPasos">
+                    <img class="numero" src="/assets/dos.png" alt="dos"/>
+                    <h4>Carga de datos</h4>
+                    <p>Registras tus gastos diarios</p>
+                </div>
+                <div class="grupoPasos">
+                    <img class="numero" src="/assets/tres.png" alt="tres"/>
+                    <h4>Informe</h4>
+                    <p>Observas el detalle de tus gastos</p>
+                </div>
+            </div>
+            <a class="botonCall" href="/iniciarsesion">¡Comencemos!</a>
+        </div>
+    </main>
+    <%- include('./partials/footer.ejs') %>
+</body>
+</html>

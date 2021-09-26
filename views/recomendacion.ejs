@@ -1,0 +1,49 @@
+<%- include('./partials/head.ejs') %>
+<body class="bodyReco">
+    <header class="headerReco">
+        <img class="logo" src="/assets/fslogoblanco.png" alt="logoFS"/>
+        <nav>
+            <a href="/misfinanzas">Mis finanzas</a>
+        </nav>
+    </header>
+    <main>  
+        <div class="ola" style="height: 80px; overflow: hidden;" ><svg viewBox="0 0 500 150" preserveAspectRatio="none" style="height: 100%; width: 100%;"><path d="M0.00,49.98 C149.99,150.00 271.49,-49.98 500.00,49.98 L500.00,0.00 L0.00,0.00 Z" style="stroke: none; fill: rgb(247, 181, 0);"></path></svg></div>
+        <div class="mainReco">
+            <div class="reco">
+                <div class="regla">
+                    <h2 class="recoH2">Hola <%= nombre %> !</h2>
+                    <h4 class="recoH4">Te recomendamos seguir la regla 50/30/20</h4>
+                    <p class="recoP">Es una de las prácticas mas importantes para el panejo eficiente de tus finanzas. Implica llevar el control sobre qué porcentaje de tus ingresos destinas a <span class="gf">gastos fijos</span>, <span class="gv">gastos variables</span> y <span class="ah">ahorros</span></p>
+                </div>
+                <div class="torta"></div>
+            </div>
+            <div class="reco2">
+                <div class="cajaReco">
+                    <div class="gastosFijos"></div>
+                    <div class="cajaTexto">
+                        <h4 class="recoH4">Gastos fijos</h4>
+                        <p class="recoP">Son gastos que tenemos que pagar todos los meses si o si para mantener nuestro estilo de vida. Los mas comunes son: <span class="gf">Impuestos, Nafta, Alquiler o Servicios.</span></p>
+                    </div>
+                </div>
+                <div class="cajaReco">
+                    <div class="gastosVariables"></div>
+                    <div class="cajaTexto">
+                        <h4 class="recoH4">Gastos variables</h4>
+                        <p class="recoP">Son gastos que que efectuamos pero que no son imprescindibles. Algunos gastos variables comunes son: <span class="gv">Beauty, Salidas, Reparaciones o Alimentacion.</span></p>
+                    </div>
+                </div>
+                <div class="cajaReco">
+                    <div class="gastosAhorros"></div>
+                    <div class="cajaTexto">
+                        <h4 class="recoH4">Ahorros</h4>
+                        <p class="recoP">Luego de identificar tus gastos fijos y variables, es recomendable que asignes todos los meses un monto mensual para ahorrar y hacer realidad tus objetivos. Estos objetivos mas comunes son: <span class="ah">Viajes, Auto nuevo, Inversion o Ahorro de emergencia.</span></p>
+                    </div>
+                </div>
+                <p class="callFinanzas">Ahora que ya sabés como organizar tus gastos mensuales vamos a tu panel <a class="ah" href="/misfinanzas">Mis finanzas</a> y comenzá a aplicar la <span class="ah">regla 50/30/20 !</span></p>
+            </div>
+        </div>
+        <div class="ola" style="height: 80px; overflow: hidden;" ><svg viewBox="0 0 500 150" preserveAspectRatio="none" style="height: 100%; width: 100%;"><path d="M0.00,49.98 C149.99,150.00 349.20,-49.98 500.00,49.98 L500.00,150.00 L0.00,150.00 Z" style="stroke: none; fill: rgb(247, 181, 0);"></path></svg></div>
+    </main>
+    <%- include('./partials/footer.ejs') %>
+</body>
+</html>

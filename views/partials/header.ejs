@@ -1,0 +1,12 @@
+<header>
+    <div class="cajaLogo">
+        <img class="logo" src="<%= title.includes('¿Cómo funciona?') ? '/assets/fslogoblanco.png' : '/assets/fslogonaranja.png' %>" alt="logoFS"/>
+        <p>Hola nombre !</p>
+    </div>
+<nav>
+    <a class="<%= title.includes('Bienvenido!') ? 'active' : null %>" href="/">Home</a>
+    <a class="<%= title.includes('¿Cómo funciona?') ? 'active' : null %>" href="/comofunciona">¿Cómo funciona?</a>
+    <a class="<%= title.includes('Iniciar sesion') ? 'active' : null %>" href="/iniciarsesion">Iniciar sesion</a>
+    <a class="<%= title.includes('Registrarse') ? 'active' : null %>" href="/registrarse">Registrarse</a>
+</nav>
+</header>
