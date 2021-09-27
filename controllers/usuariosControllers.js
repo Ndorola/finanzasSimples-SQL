@@ -28,14 +28,7 @@ const usuariosControllers = {
                     email
                 }
             })
-            if(bcryptjs.compareSync(contrasenia, usuarioRegistrado.contrasenia)) {
-                req.session.loggedIn = true,
-                req.session.usuarioId = usuarioRegistrado.id,
-                req.session.nombre = usuarioRegistrado.nombre,
-                req.session.email = usuarioRegistrado.email,
-                req.session.usuario = usuarioRegistrado
-                return res.redirect('/misfinanzas')
-            } else {
+            if(!usuarioRegistrado) {
                 res.render('iniciarSesion', {
                     title: 'Iniciar sesion',
                     error: 'Usuario o contraseña errónea',
@@ -43,6 +36,23 @@ const usuariosControllers = {
                     nombre: req.session.nombre || 'desconocido',
                     usuario: null
                 })
+            } else {
+                if(bcryptjs.compareSync(contrasenia, usuarioRegistrado.contrasenia)) {
+                    req.session.loggedIn = true,
+                    req.session.usuarioId = usuarioRegistrado.id,
+                    req.session.nombre = usuarioRegistrado.nombre,
+                    req.session.email = usuarioRegistrado.email,
+                    req.session.usuario = usuarioRegistrado
+                    return res.redirect('/misfinanzas')
+                } else {
+                    res.render('iniciarSesion', {
+                        title: 'Iniciar sesion',
+                        error: 'Usuario o contraseña errónea',
+                        loggedIn: req.session.loggedIn,
+                        nombre: req.session.nombre || 'desconocido',
+                        usuario: null
+                    })
+                }
             }
         } catch(e) {
             console.log(e)
