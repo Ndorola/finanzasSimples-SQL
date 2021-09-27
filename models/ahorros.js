@@ -17,11 +17,11 @@ const Ahorro = db.define('ahorro', {
         allowNull: false
     },
     monto: {
-        type: Sequelize.STRING,
+        type: Sequelize.FLOAT,
         allowNull: false
     },
     fecha: {
-        type: Sequelize.STRING,
+        type: Sequelize.DATE,
         allowNull: false
     },
 })

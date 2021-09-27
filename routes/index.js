@@ -24,6 +24,7 @@ router.route('/borraringreso/:id')
 .get(finanzasControllers.borrarIngreso)
 router.route('/editaringreso/:id')
 .get(finanzasControllers.editarIngreso)
+// .post(finanzasControllers.guardarIngreso)
 
 router.route('/gastos')
 .get(finanzasControllers.gastos)

@@ -110,7 +110,7 @@ const finanzasControllers = {
 
     registrarIngreso: async (req, res) => {
         if(!req.body.id) {
-            let nuevoIngreso = await new Ingreso({
+            let nuevoIngreso = new Ingreso({
                 categoria: req.body.categoria,
                 descripcion: req.body.descripcion,
                 monto: req.body.monto,
@@ -135,9 +135,7 @@ const finanzasControllers = {
         } else {
             try {
                 const {categoria, descripcion, monto, fecha, id} = req.body
-                let ingresoEditado = await Ingreso.update(
-                    {...req.body, categoria, descripcion, monto, fecha},
-                    {where: {id: id}})
+                let ingresoEditado = await Ingreso.update({...req.body, categoria, descripcion, monto, fecha}, {where: {id: id}})
                 console.log(ingresoEditado)
                 res.redirect('/ingresos')
             } catch(e) {
@@ -151,8 +149,7 @@ const finanzasControllers = {
 
     borrarIngreso: async (req, res) => {
         try {
-            let ingreso = await Ingreso.findByPk(req.params.id)
-            ingreso.destroy()
+            await Ingreso.findByPk(req.params.id)
             res.redirect('/ingresos')
         } catch(e) {
             console.log(e)
@@ -164,7 +161,7 @@ const finanzasControllers = {
 
     editarIngreso: async (req, res) => {
         try {
-            let ingreso = await Ingreso.findAll({where: {id: req.params.id}})
+            let ingreso = await Ingreso.findByPk(req.params.id)
             console.log(ingreso)
             res.render('ingresos', {
                 title: 'Panel ingresos',
@@ -240,7 +237,7 @@ const finanzasControllers = {
         } else {
             try {
                 const {tipo, descripcion, monto, fecha, id} = req.body
-                let gastoEditado = await Gasto.update({...req.body, tipo, descripcion, monto, fecha}, {id: id}, )
+                let gastoEditado = await Gasto.update({...req.body, tipo, descripcion, monto, fecha}, {where: {id: id}})
                 console.log(gastoEditado)
                 res.redirect('/gastos')
             } catch(e) {
@@ -267,7 +264,7 @@ const finanzasControllers = {
 
     editarGasto: async (req, res) => {
         try {
-            let gasto = await Gasto.findAll({where: {id: req.params.id}})
+            let gasto = await Gasto.findByPk(req.params.id)
             res.render('gastos', {
                 title: 'Panel gastos',
                 error: null,
@@ -342,7 +339,7 @@ const finanzasControllers = {
         } else {
             try {
                 const {categoria, descripcion, monto, fecha, id} = req.body
-                let ahorroEditado = await Ahorro.update({...req.body, categoria, descripcion, monto, fecha}, {id: id}, )
+                let ahorroEditado = await Ahorro.update({...req.body, categoria, descripcion, monto, fecha}, {where: {id: id}})
                 console.log(ahorroEditado)
                 res.redirect('/ahorros')
             } catch(e) {
@@ -369,7 +366,7 @@ const finanzasControllers = {
 
     editarAhorro: async (req, res) => {
         try {
-            let ahorro = await Ahorro.findAll({where: {id: req.params.id}})
+            let ahorro = await Ahorro.findByPk(req.params.id)
             res.render('ahorros', {
                 title: 'Panel ahorros',
                 error: null,
@@ -391,9 +388,14 @@ const finanzasControllers = {
     
     nuevoMes: async (req, res) => {
         if(req.session.loggedIn) {
-            await Ingreso.deleteMany({usuarioId: req.session.usuarioId})
-            await Gasto.deleteMany({usuarioId: req.session.usuarioId})
-            await Ahorro.deleteMany({usuarioId: req.session.usuarioId})
+            let ingresos = await Ingreso.findAll({where: {usuarioId: req.session.usuarioId}})
+            let gastos = await Gasto.findAll({where: {usuarioId: req.session.usuarioId}})
+            let ahorros = await Ahorro.findAll({where: {usuarioId: req.session.usuarioId}})
+
+            ingresos.destroy()
+            gastos.destroy()
+            ahorros.destroy()
+
             res.render('misFinanzas', {
                 title: 'Mis finanzas',
                 loggedIn: req.session.loggedIn,

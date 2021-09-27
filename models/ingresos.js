@@ -17,7 +17,7 @@ const Ingreso = db.define('ingreso', {
         allowNull: false
     },
     monto: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.FLOAT,
         allowNull: false
     },
     fecha: {
