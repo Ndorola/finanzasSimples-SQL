@@ -83,7 +83,6 @@ const usuariosControllers = {
             })
             if(!usuarioRegistrado) {
                 let agregarUsuario = await nuevoUsuario.save()
-                console.log(agregarUsuario)
                 req.session.loggedIn = true,
                 req.session.usuarioId = agregarUsuario.id,
                 req.session.nombre = agregarUsuario.nombre,

@@ -49,13 +49,45 @@
                 </div>
             </div>
             <div class="informe">
-                <h2 class="proximamente">Proximamente informe mensual</h2>
-                <canvas id="myChart" width="300" height="300">
-                </canvas>
-                <!-- <p>gastos fijos: <%= porcentajeFijos %></p>
-                <p>gastos fijos: <%= porcentajeVariables %></p>
-                <p>gastos fijos: <%= porcentajeAhorros %></p> -->
-                <p class="callFinanzas2">¿Querés conocer cómo organizar mejor tus gastos mensuales? <a class="ah" href="/recomendacion">Hacé click aquí!</a></p>
+                <h2 class="proximamente">Informe mensual</h2>
+                <% if(!totalGastos || !totalIngresos) { %>
+                        <p class="textoGrafico">Acá vas a poder ver tus gastos y ahorros mensuales basados en la regla 50/30/20</p>
+                        <div class="grafico"></div>
+                <% } else { %>
+                    <div class="cajaInforme">
+                        <div class="cajaGastos">
+                            <div class="porcentajeGasto">
+                                <p class="gf">Gastos fijos: <%= porcentajeFijos.toFixed(2) %> %</p>
+                                <% if(porcentajeFijos < 50) { %>
+                                    <p class="textoPorcen">Tus gastos fijos estan en orden</p>
+                                <% } else { %>
+                                    <p class="textoPorcen">Es recomendable que reduzcas tus gastos fijos</p>
+                                <% } %>
+                            </div>
+                            <div class="porcentajeGasto">
+                                <p class="gv">Gastos variables: <%= porcentajeVariables.toFixed(2) %> %</p>
+                                <% if(porcentajeVariables < 30) { %>
+                                    <p class="textoPorcen">Tus gastos variables estan en orden</p>
+                                <% } else { %>
+                                    <p class="textoPorcen">Es recomendable que reduzcas tus gastos variables</p>
+                                <% } %>
+                            </div>
+                            <div class="porcentajeGasto">
+                                <p class="ah">Ahorros: <%= porcentajeAhorros.toFixed(2) %> %</p>
+                                <% if(porcentajeAhorros < 20) { %>
+                                    <p class="textoPorcen">Tus ahorros estan en orden</p>
+                                <% } else { %>
+                                    <p class="textoPorcen">Es recomendable que reduzcas la cantidad de ahorro mensual</p>
+                                <% } %>
+                            </div>
+                        </div>
+                        <div>
+                            <canvas id="myChart" width="280" height="280">
+                            </canvas>
+                        </div>
+                    </div>
+                    <% } %>
+                <p class="callFinanzas2">¿Querés saber más sibre esta regla y organizar mejor tus gastos mensuales? <a class="ah" href="/recomendacion">Hacé click aquí!</a></p>
             </div>  
         </div>
     </main>

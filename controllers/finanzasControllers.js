@@ -56,10 +56,8 @@ const finanzasControllers = {
         let ingresos = await Ingreso.findAll({where: {usuarioId: req.session.usuarioId}})
         let gastos = await Gasto.findAll({where: {usuarioId: req.session.usuarioId}})
         let ahorros = await Ahorro.findAll({where: {usuarioId: req.session.usuarioId}})
-        let fijos = gastos.filter((gasto) => gasto.tipo === "Fijo")
-        let variables = gastos.filter((gasto) => gasto.tipo === "Variable")
-        console.log(fijos + "estos son los fijos")
-        console.log(ingresos)
+        let fijos = await Gasto.findAll({where: {usuarioId: req.session.usuarioId, tipo: "Fijo"}})
+        let variables = await Gasto.findAll({where: {usuarioId: req.session.usuarioId, tipo: "Variable"}})
         if(req.session.loggedIn) {
             return res.render('misFinanzas', {
                 title: 'Mis finanzas',
@@ -119,7 +117,6 @@ const finanzasControllers = {
             })
             try {
                 await nuevoIngreso.save()
-                console.log(nuevoIngreso)
                 res.redirect('/ingresos')
             } catch (e) {
                 res.render('ingresos', {
@@ -149,7 +146,8 @@ const finanzasControllers = {
 
     borrarIngreso: async (req, res) => {
         try {
-            await Ingreso.findByPk(req.params.id)
+            let ingreso = await Ingreso.findByPk(req.params.id)
+            ingreso.destroy()
             res.redirect('/ingresos')
         } catch(e) {
             console.log(e)
@@ -162,7 +160,6 @@ const finanzasControllers = {
     editarIngreso: async (req, res) => {
         try {
             let ingreso = await Ingreso.findByPk(req.params.id)
-            console.log(ingreso)
             res.render('ingresos', {
                 title: 'Panel ingresos',
                 error: null,
@@ -186,7 +183,6 @@ const finanzasControllers = {
         if(req.session.loggedIn) {
             try {
                 const gastos = await Gasto.findAll({where: {usuarioId: req.session.usuarioId}})
-                console.log(gastos)
                 res.render('gastos', {
                 title: 'Panel gastos',
                 gastos,
@@ -288,7 +284,6 @@ const finanzasControllers = {
         if(req.session.loggedIn) {
             try {
                 const ahorros = await Ahorro.findAll({where: {usuarioId: req.session.usuarioId}})
-                console.log(ahorros)
                 res.render('ahorros', {
                 title: 'Panel ahorros',
                 ahorros,
@@ -388,13 +383,9 @@ const finanzasControllers = {
     
     nuevoMes: async (req, res) => {
         if(req.session.loggedIn) {
-            let ingresos = await Ingreso.findAll({where: {usuarioId: req.session.usuarioId}})
-            let gastos = await Gasto.findAll({where: {usuarioId: req.session.usuarioId}})
-            let ahorros = await Ahorro.findAll({where: {usuarioId: req.session.usuarioId}})
-
-            ingresos.destroy()
-            gastos.destroy()
-            ahorros.destroy()
+            await Ingreso.destroy({where: {usuarioId: req.session.usuarioId}})
+            await Gasto.destroy({where: {usuarioId: req.session.usuarioId}})
+            await Ahorro.destroy({where: {usuarioId: req.session.usuarioId}})
 
             res.render('misFinanzas', {
                 title: 'Mis finanzas',
